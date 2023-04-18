@@ -1,0 +1,27 @@
+label{
+    display: flex;
+    margin-bottom: 10px;
+    margin-right: 45rem;
+    justify-content: center;
+}
+
+form{
+    margin-top: 80px;
+    margin-left: 10rem;
+}
+
+input{
+    display: flex;
+    font-size: 16px;
+    padding: 10px;
+    width: 30%;
+    margin-bottom: 10px;
+}
+
+.btn{
+    background-color: rgb(197, 112, 47);
+    color: white;
+    margin-bottom: 10px;
+    margin-right: 45rem;
+
+}

@@ -1,0 +1,26 @@
+.item-list{
+    margin-left: 40rem;
+    margin-bottom: 30px;
+    margin-top: -13rem;
+    width: 30%;
+    list-style: none;
+    
+   
+}
+
+.item-list li{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 1px 3px black;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.expense{
+    border-right: 8px solid red;
+}
+
+.income{
+    border-right: 8px solid green;
+}
