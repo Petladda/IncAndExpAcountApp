@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const FormComponent = (props) =>{
 
     const [title,setTitle] = useState('');
-    const [amount,setAmount] = useState(0);
+    const [amount,setAmount] = useState(0); 
     const [formValid,setFormValid] = useState(false)
 
     const inputTitle =(event) =>{
