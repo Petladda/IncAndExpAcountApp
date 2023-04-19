@@ -1,0 +1,16 @@
+p.incomes{
+    color: rgb(2, 202, 2);
+}
+
+p.minus{
+    color: red;
+}
+
+.report-con{
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    margin-left: 27rem;
+    margin-right: 27rem;
+}

@@ -1,30 +1,41 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import Transaction from './components/Transaction'
-import FormComponent from './components/FormComponent'
+import Transaction from './components/Transaction/Transaction'
+import FormComponent from './components/FormComponent/FormComponent'
 import DataContext from './data/DataContext'
-import ReportComponent from './components/ReportComponent'
-import { element } from 'prop-types'
+import ReportComponent from './components/ReportComponent/ReportComponent'
+import Item from './components/Item/Item'
+
 
 
 function App() {
 
   const data = [
-    {id:1,title:"โจ๊ก",amount:5000},
-    {id:2,title:"ไก่",amount:-800},
-    {id:3,title:"อู๊ด",amount:100},
+    {id:1,title:"โจ๊ก",amount:2000},
+    {id:2,title:"โจ๊ก",amount:2000},
+    
     ]
 
   const [items,setItems] = useState(data)
+  //const [reItem,setReItem] = useState(data)
   const [reportIncome,setReportIncome] = useState(0)
   const [reportExpense,setReportExpense] = useState(0)
 
   const addNewItem = (newItem)=>{
     setItems((prevItem)=>{
-      return[newItem,...prevItem]
+      return[...prevItem,newItem]
     })
   }
 
+  const removeItem = (moveItem)=>{
+    setItems((prevItem)=>{
+      return prevItem.filter((indexItem)=> {indexItem.index !== moveItem})
+    })
+    console.log(moveItem)
+    
+  }
+
+  
   useEffect(()=>{
     const amounts = items.map((items)=>{
       return items.amount;
@@ -45,17 +56,16 @@ function App() {
   return (
     
     <DataContext.Provider value={
-      { expense: reportExpense,
-        income: reportIncome
-      }
-    }>
+        { expense: reportExpense,
+          income: reportIncome
+        }
+      }>
       <div className="App">
-      <FormComponent addItem={addNewItem}/>
-      <ReportComponent/>
-      <Transaction items={items}/>
-      
-      
-    </div>
+        <FormComponent addItem={addNewItem} />
+        <ReportComponent/>
+        <Transaction items={items} onRemoveItem={removeItem}/>
+        
+      </div>
     </DataContext.Provider>
     
   )
