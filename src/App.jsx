@@ -4,37 +4,92 @@ import Transaction from './components/Transaction/Transaction'
 import FormComponent from './components/FormComponent/FormComponent'
 import DataContext from './data/DataContext'
 import ReportComponent from './components/ReportComponent/ReportComponent'
-import Item from './components/Item/Item'
+
+
 
 
 
 function App() {
 
   const data = [
-    {id:1,title:"โจ๊ก",amount:2000},
-    {id:2,title:"โจ๊ก",amount:2000},
+    {id:1,title:"ไก่",amount:-2000},
+    {id:2,title:"โจ๊ก",amount:200},
     
     ]
 
   const [items,setItems] = useState(data)
-  //const [reItem,setReItem] = useState(data)
+  const [editform,setEditform] = useState(null)
   const [reportIncome,setReportIncome] = useState(0)
   const [reportExpense,setReportExpense] = useState(0)
 
+  //add
   const addNewItem = (newItem)=>{
     setItems((prevItem)=>{
       return[...prevItem,newItem]
     })
   }
 
+  //remove
   const removeItem = (moveItem)=>{
     setItems((prevItem)=>{
-      return prevItem.filter((indexItem)=> {indexItem.index !== moveItem})
+      return prevItem.filter((_,indexItem)=> indexItem !== moveItem.index)
     })
-    console.log(moveItem)
+  }
+  
+  //edit
+  const onEditFormvalue = (event)=>{
+    event.preventDefault();
+    setItems((prevItem)=>{
+      return ( prevItem.map((edit)=>{
+        //console.log(edit)
+        if (edit.id !== editform.id) return edit;
+        
+        return editform
+      })
+      
+    )
+    })
+    setEditform(null);
+  }
+
+  //seteditform
+  const onEditForm = (event)=>{
+    const {name, value} = event.target
+    setEditform((prevForm)=>{
+      //console.log(prevForm)
+      return ({...prevForm,
+        [name]:value}
+        )
+      })
+      
     
   }
 
+  //formedit
+  let editFormElement = null;
+    if(!!editform){
+      console.log("editform",editform)
+      editFormElement = (
+        <div className='app-edit-note'>
+            <form onSubmit={onEditFormvalue} >
+                <div className='form-edit'>
+                    <p>ชื่อรายการ</p>
+                    <input type="text" name="title" value={editform.title} onChange={onEditForm}></input>
+              
+                </div>
+                <div className='form-edit '>
+                    <p>จำนวนเงิน</p>
+                    <input type="number" name="amount" value={editform.amount} onChange={onEditForm}></input>
+                </div>
+                <div >
+                    <button type='submit' className='' >บันทึกรายการ</button>
+                </div>
+            </form>
+           </div>
+        );
+    }
+    
+  
   
   useEffect(()=>{
     const amounts = items.map((items)=>{
@@ -60,12 +115,16 @@ function App() {
           income: reportIncome
         }
       }>
+      {editFormElement}
+
       <div className="App">
-        <FormComponent addItem={addNewItem} />
+        <FormComponent addItem={addNewItem}  />
         <ReportComponent/>
-        <Transaction items={items} onRemoveItem={removeItem}/>
+        
+        <Transaction items={items} onRemoveItem={removeItem} onEditForm={onEditForm} onEditFormvalue={onEditFormvalue}/>
         
       </div>
+      
     </DataContext.Provider>
     
   )

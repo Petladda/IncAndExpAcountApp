@@ -28,11 +28,11 @@ const FormComponent = (props) =>{
         setAmount(0)
     }
 
-
     useEffect(()=>{
         const checkData = title.trim().length>0 && amount !== 0;
         setFormValid(checkData)
     },[title,amount])
+    
     return(
         <div>
             <form onSubmit={saveItem} >
