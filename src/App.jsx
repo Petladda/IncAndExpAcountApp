@@ -8,7 +8,6 @@ import ReportComponent from './components/ReportComponent/ReportComponent'
 
 
 
-
 function App() {
 
   const data = [
@@ -55,41 +54,52 @@ function App() {
   }
 
   //seteditform
-  const onEditForm = (event)=>{
-    const {name,value} = event.target
-    setEditform((prevForm)=>{
-     //console.log("prevForm",prevForm)
-      return ({...prevForm,[name]:value }
-        )
-      })
+  const onEditForm = (editIndex,editData) =>(event)=>{
+    const newArr = items.map((item,i)=>{
+      const name1 = editData.title
+      const {name,value} = event.target
+      console.log(name1)
+      if(editIndex == i){
+        return {...item,[name]:[value]}
+      }else{
+        return item
+      }
+    })
+    setEditform(newArr)
   }
 
-  const setValueForm = (editItem) =>{
-    //items.filter((_,indexEdit)=>{indexEdit == editItem})
-    //setEditform(edit)
-    console.log("editItem",editItem)
+  const setValue = () =>{
+    
   }
+
+ 
   
 
   //onSubmit={onEditFormvalue}
   //formedit
   let editFormElement = null;
     if(!!editform){
-      //console.log("editform",editform)
+      
       editFormElement = ( 
         <div className='app-edit-note'>
             <form  >
                 <div className='form-edit'>
                     <p>ชื่อรายการ</p>
-                    <input type="text" name="title" value={editform.title} onChange={onEditForm}></input>
+                    <input type="text" 
+                    name="title" 
+                    value={editform.title}
+                    onChange={onEditForm}></input>
               
                 </div>
                 <div className='form-edit '>
                     <p>จำนวนเงิน</p>
-                    <input type="number" name="amount" value={editform.amount} onChange={onEditForm}  ></input>
+                    <input type="number" 
+                    name="amount" 
+                    value={editform.amount} 
+                    onChange={onEditForm}  ></input>
                 </div>
                 <div >
-                    <button type='submit' className='' >บันทึกรายการ</button>
+                    <button type='submit' >บันทึกรายการ</button>
                 </div>
             </form>
            </div>
@@ -131,7 +141,7 @@ function App() {
         <ReportComponent/>
         
         <Transaction items={items} onRemoveItem={removeItem} 
-        setValueForm={setValueForm}  onEditFormvalue={onEditFormvalue}/>
+         onEditFormvalue={onEditFormvalue} onEditForm={onEditForm} />
         
       </div>
       

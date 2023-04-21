@@ -2,29 +2,30 @@ import PropTypes from 'prop-types';
 
 
 const Item = (props) =>{
-    const {title,amount,setValueForm,index} = props
+    const {title,amount,index,onEditForm} = props
     const status = amount<0 ? "expense":"income"
     const symbol = amount<0 ? "-":"+"
 
     const deleteItem =(event)=>{
         event.preventDefault();
-        const index = {
+        const indexItem = {
             index:index
         }
-        props.onRemoveItem(index)
+        props.onRemoveItem(indexItem)
         
         }
 
     return(
-        <div >
+        
             <div>
                 <li className={status}>{title} <span>{symbol}{Math.abs(amount)}</span> 
-                <button type='submit' onClick={setValueForm(index)}>แก้ไข</button>
-                <button type='submit' onClick={deleteItem}>ลบ</button></li>
+                <button type='submit' onClick={onEditForm(index,{title,amount})}>แก้ไข</button>
+                <button type='submit' onClick={deleteItem}>ลบ</button>
+                </li>
             </div>
             
             
-        </div>
+        
     );
 }
 
