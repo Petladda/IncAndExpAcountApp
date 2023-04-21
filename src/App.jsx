@@ -13,12 +13,14 @@ function App() {
 
   const data = [
     {id:1,title:"ไก่",amount:-2000},
-    {id:2,title:"โจ๊ก",amount:200},
+    {id:3,title:"แวว",amount:200},
     
     ]
 
   const [items,setItems] = useState(data)
   const [editform,setEditform] = useState(null)
+
+
   const [reportIncome,setReportIncome] = useState(0)
   const [reportExpense,setReportExpense] = useState(0)
 
@@ -33,6 +35,7 @@ function App() {
   const removeItem = (moveItem)=>{
     setItems((prevItem)=>{
       return prevItem.filter((_,indexItem)=> indexItem !== moveItem.index)
+      
     })
   }
   
@@ -41,12 +44,11 @@ function App() {
     event.preventDefault();
     setItems((prevItem)=>{
       return ( prevItem.map((edit)=>{
-        //console.log(edit)
-        if (edit.id !== editform.id) return edit;
-        
+        //console.log("testmap",edit.id !== editform.id)
+
         return editform
-      })
-      
+
+        })
     )
     })
     setEditform(null);
@@ -54,24 +56,29 @@ function App() {
 
   //seteditform
   const onEditForm = (event)=>{
-    const {name, value} = event.target
+    const {name,value} = event.target
     setEditform((prevForm)=>{
-      //console.log(prevForm)
-      return ({...prevForm,
-        [name]:value}
+     //console.log("prevForm",prevForm)
+      return ({...prevForm,[name]:value }
         )
       })
-      
-    
   }
 
+  const setValueForm = (editItem) =>{
+    //items.filter((_,indexEdit)=>{indexEdit == editItem})
+    //setEditform(edit)
+    console.log("editItem",editItem)
+  }
+  
+
+  //onSubmit={onEditFormvalue}
   //formedit
   let editFormElement = null;
     if(!!editform){
-      console.log("editform",editform)
-      editFormElement = (
+      //console.log("editform",editform)
+      editFormElement = ( 
         <div className='app-edit-note'>
-            <form onSubmit={onEditFormvalue} >
+            <form  >
                 <div className='form-edit'>
                     <p>ชื่อรายการ</p>
                     <input type="text" name="title" value={editform.title} onChange={onEditForm}></input>
@@ -79,7 +86,7 @@ function App() {
                 </div>
                 <div className='form-edit '>
                     <p>จำนวนเงิน</p>
-                    <input type="number" name="amount" value={editform.amount} onChange={onEditForm}></input>
+                    <input type="number" name="amount" value={editform.amount} onChange={onEditForm}  ></input>
                 </div>
                 <div >
                     <button type='submit' className='' >บันทึกรายการ</button>
@@ -87,10 +94,11 @@ function App() {
             </form>
            </div>
         );
+       
     }
     
   
-  
+  //
   useEffect(()=>{
     const amounts = items.map((items)=>{
       return items.amount;
@@ -108,6 +116,7 @@ function App() {
 
   },[items,reportIncome,reportExpense])
 
+  //--------
   return (
     
     <DataContext.Provider value={
@@ -121,7 +130,8 @@ function App() {
         <FormComponent addItem={addNewItem}  />
         <ReportComponent/>
         
-        <Transaction items={items} onRemoveItem={removeItem} onEditForm={onEditForm} onEditFormvalue={onEditFormvalue}/>
+        <Transaction items={items} onRemoveItem={removeItem} 
+        setValueForm={setValueForm}  onEditFormvalue={onEditFormvalue}/>
         
       </div>
       
