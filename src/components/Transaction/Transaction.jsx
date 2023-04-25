@@ -3,12 +3,12 @@ import './Transaction.css'
 
 
 const Transaction = (props) => {
-    const {items,onRemoveItem,onEditForm} = props
+    const {items,setEdit,onRemoveItem,editItem} = props
 
     return (
         <ul className="item-list">
             {items.map((element,index)=> {
-            return <Item {...element} key={element.id} index={index} onRemoveItem={onRemoveItem}  onEditForm={onEditForm}/>
+            return <Item {...element} key={element.id} index={index} onRemoveItem={onRemoveItem}  editItem={editItem}/>
             })}
             
         </ul> 

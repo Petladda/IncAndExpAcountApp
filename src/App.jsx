@@ -4,6 +4,7 @@ import Transaction from './components/Transaction/Transaction'
 import FormComponent from './components/FormComponent/FormComponent'
 import DataContext from './data/DataContext'
 import ReportComponent from './components/ReportComponent/ReportComponent'
+import EditTodo from './components/EditForm/EditTodo'
 
 
 
@@ -17,8 +18,9 @@ function App() {
     ]
 
   const [items,setItems] = useState(data)
-  const [editform,setEditform] = useState(null)
-
+  
+  const [selectItem,setselectItem] = useState(data)
+  const [openModal,setopenModal] = useState(false)
 
   const [reportIncome,setReportIncome] = useState(0)
   const [reportExpense,setReportExpense] = useState(0)
@@ -38,77 +40,33 @@ function App() {
     })
   }
   
-  //edit
-  const onEditFormvalue = (event)=>{
-    event.preventDefault();
-    setItems((prevItem)=>{
-      return ( prevItem.map((edit)=>{
-        //console.log("testmap",edit.id !== editform.id)
-
-        return editform
-
-        })
-    )
-    })
-    setEditform(null);
-  }
-
   //seteditform
-  const onEditForm = (editIndex,editData) =>(event)=>{
-    const newArr = items.map((item,i)=>{
-      const name1 = editData.title
-      const {name,value} = event.target
-      console.log(name1)
-      if(editIndex == i){
-        return {...item,[name]:[value]}
-      }else{
-        return item
-      }
-    })
-    setEditform(newArr)
-  }
-
-  const setValue = () =>{
-    
-  }
-
- 
-  
-
-  //onSubmit={onEditFormvalue}
-  //formedit
-  let editFormElement = null;
-    if(!!editform){
+  const editItem = (editIndex) =>{
+    showModal()
+    setselectItem((prevEdit)=>{
+      return prevEdit.filter((_,i)=> i === editIndex )
       
-      editFormElement = ( 
-        <div className='app-edit-note'>
-            <form  >
-                <div className='form-edit'>
-                    <p>ชื่อรายการ</p>
-                    <input type="text" 
-                    name="title" 
-                    value={editform.title}
-                    onChange={onEditForm}></input>
-              
-                </div>
-                <div className='form-edit '>
-                    <p>จำนวนเงิน</p>
-                    <input type="number" 
-                    name="amount" 
-                    value={editform.amount} 
-                    onChange={onEditForm}  ></input>
-                </div>
-                <div >
-                    <button type='submit' >บันทึกรายการ</button>
-                </div>
-            </form>
-           </div>
-        );
-       
-    }
-    
+    })
+    console.log("editItem : ",editIndex)
+  }
+
+
+  //showModal
+  const showModal = ()=>{
+    setopenModal(true)
+  }
+  //closeModal
+  const closeModal = () =>{
+    setopenModal(false)
+  }
   
-  //
+  
+ 
+
+  
+  
+  
+  //useEffect
   useEffect(()=>{
     const amounts = items.map((items)=>{
       return items.amount;
@@ -134,20 +92,22 @@ function App() {
           income: reportIncome
         }
       }>
-      {editFormElement}
-
+      
+      
       <div className="App">
         <FormComponent addItem={addNewItem}  />
         <ReportComponent/>
+        <EditTodo selectData={selectItem}  openModal={openModal}/>
         
-        <Transaction items={items} onRemoveItem={removeItem} 
-         onEditFormvalue={onEditFormvalue} onEditForm={onEditForm} />
+        <Transaction items={items} onRemoveItem={removeItem} editItem={editItem}
+           />
         
       </div>
       
     </DataContext.Provider>
     
   )
+ 
 }
 
 export default App
