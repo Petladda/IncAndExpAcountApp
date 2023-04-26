@@ -12,14 +12,14 @@ import EditTodo from './components/EditForm/EditTodo'
 function App() {
 
   const data = [
-    {id:1,title:"ไก่",amount:-2000},
-    {id:3,title:"แวว",amount:200},
+    {id:1,title:"น้ำมันพื๊ชช",amount:-2000},
+    {id:3,title:"ค่าหนม",amount:200},
     
     ]
 
   const [items,setItems] = useState(data)
   
-  const [selectItem,setselectItem] = useState(data)
+  const [selectItem,setselectItem] = useState()
   const [openModal,setopenModal] = useState(false)
 
   const [reportIncome,setReportIncome] = useState(0)
@@ -43,13 +43,26 @@ function App() {
   //seteditform
   const editItem = (editIndex) =>{
     showModal()
-    setselectItem((prevEdit)=>{
-      return prevEdit.filter((_,i)=> i === editIndex )
+    setselectItem(editIndex)
+    
       
-    })
     console.log("editItem : ",editIndex)
   }
 
+  //
+  const handleTitle = (event) =>{
+    console.log(event)
+    const inputValue = event.target.value
+    setItems((prevItems)=>{
+        prevItems[selectItem]
+         })
+
+
+
+    //console.log("handleTitle value : ",value)
+}
+
+  //
 
   //showModal
   const showModal = ()=>{
@@ -97,7 +110,8 @@ function App() {
       <div className="App">
         <FormComponent addItem={addNewItem}  />
         <ReportComponent/>
-        <EditTodo selectData={selectItem}  openModal={openModal}/>
+        <EditTodo selectData={items[selectItem]}  openModal={openModal} closeModal={closeModal}
+        handleTitle={handleTitle}/>
         
         <Transaction items={items} onRemoveItem={removeItem} editItem={editItem}
            />

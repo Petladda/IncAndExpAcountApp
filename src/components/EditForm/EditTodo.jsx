@@ -1,15 +1,21 @@
+import { useState } from "react"
 import EditForm from "./EditForm"
-import './EditForm.css'
 
 const EditTodo = (props)=>{
     
-    const {selectData,openModal } = props
+    const {selectData,openModal,closeModal,handleTitle} = props
     console.log("selectData : ",selectData)
 
+    
+
+   
     return (
         <>
             {
-                openModal && <EditForm/>
+                openModal && <EditForm
+                selectData={selectData} closeModal={closeModal} handleTitle={handleTitle}
+                
+                />
             }
         </>
     

@@ -10,9 +10,15 @@
     z-index: 99;
   }
   
-  .form-edit{
+.form-edit{
     display: inline-block;
     justify-content: space-between;
+    margin-top: -1rem;
   }
+
+.list{
+  width: 10rem;
+}
+
   
   

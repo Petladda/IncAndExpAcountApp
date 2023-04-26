@@ -2,15 +2,18 @@ import { useState } from "react"
 import './EditForm.css'
 
 const EditForm = (props)=>{
-    
+    const {selectData,handleTitle,closeModal} = props
+
 
     return (
         <div className='app-edit-note'>
             <form  >
                 <div className='form-edit'>
                     <p>ชื่อรายการ</p>
-                    <input type="text" 
+                    <input type="text" className="list"
                     name="title" 
+                    value={selectData.title}
+                    onChange={(e)=> handleTitle(e)}
                     ></input>
               
                 </div>
@@ -18,13 +21,15 @@ const EditForm = (props)=>{
                     <p>จำนวนเงิน</p>
                     <input type="number" 
                     name="amount" 
-                   
-                    
+                    value={selectData.amount}
+                    onChange={(e)=> handleTitle(e)}
                     ></input>
                 </div>
                 <div >
                     <button type='submit' >บันทึกรายการ</button>
+                    <button type='submit' onClick={closeModal} >ยกเลิก</button>
                 </div>
+
             </form>
            </div>
     )
