@@ -2,7 +2,7 @@ import { useState } from "react"
 import './EditForm.css'
 
 const EditForm = (props)=>{
-    const {selectData,handleTitle,closeModal} = props
+    const {selectData,handleTitle,closeModal,handleAmount} = props
 
 
     return (
@@ -22,12 +22,11 @@ const EditForm = (props)=>{
                     <input type="number" 
                     name="amount" 
                     value={selectData.amount}
-                    onChange={(e)=> handleTitle(e)}
+                    onChange={(e)=> handleAmount(e)}
                     ></input>
                 </div>
                 <div >
-                    <button type='submit' >บันทึกรายการ</button>
-                    <button type='submit' onClick={closeModal} >ยกเลิก</button>
+                    <button type='submit' onClick={closeModal} >บันทึกรายการ</button>
                 </div>
 
             </form>

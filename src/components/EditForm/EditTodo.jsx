@@ -3,18 +3,16 @@ import EditForm from "./EditForm"
 
 const EditTodo = (props)=>{
     
-    const {selectData,openModal,closeModal,handleTitle} = props
-    console.log("selectData : ",selectData)
-
+    const {selectData,openModal,closeModal,handleTitle,handleAmount} = props
     
-
+    
    
     return (
         <>
             {
                 openModal && <EditForm
                 selectData={selectData} closeModal={closeModal} handleTitle={handleTitle}
-                
+                handleAmount={handleAmount}
                 />
             }
         </>

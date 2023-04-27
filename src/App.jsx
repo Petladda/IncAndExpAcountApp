@@ -25,14 +25,14 @@ function App() {
   const [reportIncome,setReportIncome] = useState(0)
   const [reportExpense,setReportExpense] = useState(0)
 
-  //add
+  
   const addNewItem = (newItem)=>{
     setItems((prevItem)=>{
       return[...prevItem,newItem]
     })
   }
 
-  //remove
+  
   const removeItem = (moveItem)=>{
     setItems((prevItem)=>{
       return prevItem.filter((_,indexItem)=> indexItem !== moveItem.index)
@@ -40,44 +40,41 @@ function App() {
     })
   }
   
-  //seteditform
+  
   const editItem = (editIndex) =>{
     showModal()
     setselectItem(editIndex)
-    
-      
-    console.log("editItem : ",editIndex)
   }
 
-  //
+  
   const handleTitle = (event) =>{
-    console.log(event)
     const inputValue = event.target.value
     setItems((prevItems)=>{
-        prevItems[selectItem]
+        prevItems[selectItem].title = inputValue
+        return [...prevItems]
          })
+  }
+
+  const handleAmount = (event) =>{
+    const inputValueAmount = event.target.value
+    setItems((prevAmount)=>{
+      prevAmount[selectItem].amount = Number(inputValueAmount)
+      return [...prevAmount]
+    })
+  }
 
 
 
-    //console.log("handleTitle value : ",value)
-}
-
-  //
-
-  //showModal
   const showModal = ()=>{
     setopenModal(true)
   }
-  //closeModal
+
   const closeModal = () =>{
     setopenModal(false)
   }
   
   
- 
 
-  
-  
   
   //useEffect
   useEffect(()=>{
@@ -97,7 +94,7 @@ function App() {
 
   },[items,reportIncome,reportExpense])
 
-  //--------
+  
   return (
     
     <DataContext.Provider value={
@@ -111,7 +108,7 @@ function App() {
         <FormComponent addItem={addNewItem}  />
         <ReportComponent/>
         <EditTodo selectData={items[selectItem]}  openModal={openModal} closeModal={closeModal}
-        handleTitle={handleTitle}/>
+        handleTitle={handleTitle} handleAmount={handleAmount}/>
         
         <Transaction items={items} onRemoveItem={removeItem} editItem={editItem}
            />
